@@ -1,21 +1,24 @@
-﻿# MovieNight
+Absolutely. Here's a clean, professional version of your README.md file in English, free of emojis and optimized for GitHub readability:
 
 MovieNight
-MovieNight is a sophisticated movie recommendation application that automatically selects films based on user-defined filters and tracks viewing history. Designed with a modern interface and smart logic, it delivers a personalized experience for every user.
+MovieNight is a personalized movie recommendation application built with modern technologies. It automatically selects movies based on user preferences, tracks viewing history, and allows users to rate content. Designed with a stylish dark interface and responsive layout, MovieNight delivers a smart, intuitive experience.
+
 Features
-- Smart recommendation engine with customizable filters
-- Ability to mark movies as “watched” to exclude from future suggestions
-- Personal rating system with star-based feedback
-- Filtering by genre, release year, and rating
-- Responsive design for desktop and mobile
-- Visually rich movie cards with detailed information
+- Intelligent filtering system with genre, year, and rating options
+- Automatic recommendations based on filters and user history
+- Watch tracking functionality to exclude viewed titles
+- Personal star-based rating system
+- Responsive layout for desktop and mobile
+- Clean movie cards with detailed information
+
 Design Highlights
-- Dark theme with purple and blue gradient accents
-- Smooth animations and hover effects on movie cards
-- Clean typography with clear visual hierarchy
-- Interactive filter controls with instant feedback
-- Intuitive star rating system
-- Professional layout with rounded corners and subtle shadows
+- Dark theme using gradient overlays in purple and blue tones
+- Smooth component-level animations and hover interactions
+- Clear, hierarchical typography for optimal readability
+- Interactive filters with real-time feedback
+- Rating system built around visual star selection
+- Visually balanced layout with rounded corners and depth effects
+
 Getting Started
 To run the project locally:
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
@@ -30,11 +33,12 @@ npm install
 npm run dev
 
 
+
 Tech Stack
-| Layer | Technology Used | 
-| Frontend | React + TypeScript | 
+| Layer | Technologies Used | 
+| Framework | React + TypeScript | 
 | Styling | TailwindCSS | 
-| State Mgmt | Context API | 
+| State | Context API | 
 | Build Tool | Vite | 
 
 
