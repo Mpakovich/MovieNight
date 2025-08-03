@@ -19,27 +19,37 @@ Design Highlights
 - Rating system built around visual star selection
 - Visually balanced layout with rounded corners and depth effects
 
-Getting Started
-To run the project locally:
+# Allow PowerShell scripts (Windows)
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
+# Clone the repository
 git clone https://github.com/Mpakovich/MovieNight.git
 cd MovieNight
 
+# Create local environment file
 copy .env.example .env
 
+# Install dependencies
 npm install
 
+# Start development server
 npm run dev
 
 
 
 Tech Stack
-| Layer | Technologies Used | 
-| Framework | React + TypeScript | 
-| Styling | TailwindCSS | 
-| State | Context API | 
-| Build Tool | Vite | 
+MovieNight is built using a modern front-end stack focused on performance, scalability, and developer experience.
+| Category | Description | Technology | 
+| Framework | Component-based UI architecture | React + TypeScript | 
+| Styling | Utility-first CSS framework | TailwindCSS | 
+| State Management | Global state handling | Context API | 
+| Build Tool | Fast development and bundling | Vite | 
+
+
+
+
+
+
 
 
 
