@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MovieCard } from '../MovieCard';
@@ -98,7 +97,7 @@ describe('MovieCard', () => {
     });
 
     it('does not render watched date if missing', () => {
-      const watchedMovie = { ...mockMovie, watched: true, watchedDate: undefined as any };
+      const watchedMovie = { ...mockMovie, watched: true, watchedDate: undefined as unknown as string | undefined };
       render(<MovieCard movie={watchedMovie} onMarkWatched={mockOnMarkWatched} onRateMovie={mockOnRateMovie} />);
       expect(screen.queryByText(/Watched on/)).not.toBeInTheDocument();
     });
@@ -169,7 +168,7 @@ describe('MovieCard', () => {
     it('calls onRateMovie when user rating changed', () => {
       render(<MovieCard movie={mockMovie} onMarkWatched={mockOnMarkWatched} onRateMovie={mockOnRateMovie} />);
       const stars = screen.getAllByLabelText(/rate \d star/i);
-      fireEvent.click(stars[7]); 
+      fireEvent.click(stars[7]);
       expect(mockOnRateMovie).toHaveBeenCalledWith(mockMovie.id, 3);
     });
   });

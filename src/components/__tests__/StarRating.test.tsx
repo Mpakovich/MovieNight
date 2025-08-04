@@ -1,11 +1,6 @@
-/// <reference types="vitest" />
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { StarRating } from '../StarRating';
-
-
-
-
 
 describe('StarRating', () => {
   it('renders the correct number of stars', () => {
