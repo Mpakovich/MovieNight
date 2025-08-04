@@ -5,11 +5,13 @@ import { MovieCard } from './components/MovieCard';
 import { FilterPanel } from './components/FilterPanel';
 import { ViewingHistory } from './components/ViewingHistory';
 import { Film, Shuffle, BarChart3 } from 'lucide-react';
+import { STRINGS } from './constants/strings';
+import { getRandomMovie } from './utils/movieUtils';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>(initialMovies);
   const [activeTab, setActiveTab] = useState<'discover' | 'history'>('discover');
-  const [recommendedMovie, setRecommendedMovie] = useState<Movie | null>(null);
+  const [recommendedMovieId, setRecommendedMovieId] = useState<number | null>(null);
   const [filters, setFilters] = useState<Filters>({
     genres: [],
     minRating: 7.0,
@@ -28,29 +30,25 @@ function App() {
 
   const filteredMovies = useMemo(() => {
     return movies.filter(movie => {
-      // Genre filter
       if (filters.genres.length > 0 && !filters.genres.some(genre => movie.genre.includes(genre))) {
         return false;
       }
-      
-      // Rating filter
       if (movie.imdbRating < filters.minRating) {
         return false;
       }
-      
-      // Year filter
       if (movie.year < filters.minYear || movie.year > filters.maxYear) {
         return false;
       }
-      
-      // Unwatched filter
       if (filters.unwatchedOnly && movie.watched) {
         return false;
       }
-      
       return true;
     });
   }, [movies, filters]);
+
+  const recommendedMovie = useMemo(() => {
+    return movies.find(m => m.id === recommendedMovieId) || null;
+  }, [movies, recommendedMovieId]);
 
   const handleMarkWatched = (movieId: number) => {
     setMovies(prevMovies =>
@@ -65,9 +63,8 @@ function App() {
       )
     );
 
-    // Clear recommendation if the recommended movie was marked as watched
-    if (recommendedMovie?.id === movieId) {
-      setRecommendedMovie(null);
+    if (recommendedMovieId === movieId) {
+      setRecommendedMovieId(null);
     }
   };
 
@@ -81,20 +78,14 @@ function App() {
 
   const getRandomRecommendation = () => {
     const availableMovies = filteredMovies.filter(movie => !movie.watched);
-    if (availableMovies.length === 0) {
-      setRecommendedMovie(null);
-      return;
-    }
-    
-    const randomIndex = Math.floor(Math.random() * availableMovies.length);
-    setRecommendedMovie(availableMovies[randomIndex]);
+    const randomMovie = getRandomMovie(availableMovies);
+    setRecommendedMovieId(randomMovie?.id || null);
   };
 
   const watchedMovies = movies.filter(movie => movie.watched);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
-      {/* Header */}
       <header className="bg-black bg-opacity-50 backdrop-blur-sm border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
@@ -103,8 +94,8 @@ function App() {
                 <Film className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white">MovieNight</h1>
-                <p className="text-gray-400">Your personal movie recommendation engine</p>
+                <h1 className="text-3xl font-bold text-white">{STRINGS.APP_NAME}</h1>
+                <p className="text-gray-400">{STRINGS.APP_TAGLINE}</p>
               </div>
             </div>
 
@@ -117,7 +108,7 @@ function App() {
                     : 'text-gray-300 hover:text-white hover:bg-gray-800'
                 }`}
               >
-                Discover
+                {STRINGS.NAV_DISCOVER}
               </button>
               <button
                 onClick={() => setActiveTab('history')}
@@ -128,7 +119,7 @@ function App() {
                 }`}
               >
                 <BarChart3 size={16} />
-                <span>History ({watchedMovies.length})</span>
+                <span>{STRINGS.NAV_HISTORY} ({watchedMovies.length})</span>
               </button>
             </nav>
           </div>
@@ -138,7 +129,6 @@ function App() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'discover' ? (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Filters Sidebar */}
             <div className="lg:col-span-1">
               <FilterPanel
                 filters={filters}
@@ -146,7 +136,6 @@ function App() {
                 availableGenres={availableGenres}
               />
 
-              {/* Get Recommendation Button */}
               <div className="mt-6">
                 <button
                   onClick={getRandomRecommendation}
@@ -164,7 +153,6 @@ function App() {
                 )}
               </div>
 
-              {/* Stats */}
               <div className="mt-6 bg-gray-800 rounded-xl p-4">
                 <h3 className="text-white font-semibold mb-3">Your Stats</h3>
                 <div className="space-y-2 text-sm">
@@ -186,9 +174,7 @@ function App() {
               </div>
             </div>
 
-            {/* Movies Grid */}
             <div className="lg:col-span-3">
-              {/* Recommended Movie */}
               {recommendedMovie && (
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-white mb-4 flex items-center space-x-2">
@@ -206,7 +192,6 @@ function App() {
                 </div>
               )}
 
-              {/* All Movies */}
               <div>
                 <h2 className="text-2xl font-bold text-white mb-6">
                   All Movies ({filteredMovies.length})
